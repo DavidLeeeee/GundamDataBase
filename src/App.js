@@ -23,7 +23,7 @@ import Gundam from "./components/Page/UC/Gundam";
 import Gundam0080 from "./components/Page/UC/Gundam0080";
 import Gundam0083 from "./components/Page/UC/Gundam0083";
 import GundamHastaway from "./components/Page/UC/GundamHastaway";
-import GundamTheOrigin from "./components/Page/UC/GundamTheOrigin";
+// import GundamTheOrigin from "./components/Page/UC/GundamTheOrigin";
 import GundamUC from "./components/Page/UC/GundamUC";
 import GundamZ from "./components/Page/UC/GundamZ";
 import CharsCounter from "./components/Page/UC/CharsCounter";
