@@ -10,7 +10,7 @@ import 안드레이 from "../../../assets/gundamDateset/002/안드레이.png";
 import 록온 from "../../../assets/gundamDateset/002/록온.png";
 import 켈딤 from "../../../assets/gundamDateset/002/켈딤.png";
 import 더블오라이저 from "../../../assets/gundamDateset/002/더블오라이저.png";
-import 더블오 from "../../../assets/gundamDateset/002/더블오.png";
+//import 더블오 from "../../../assets/gundamDateset/002/더블오.png";
 import 세츠나 from "../../../assets/gundamDateset/002/세츠나2.png";
 import 아르케 from "../../../assets/gundamDateset/002/아르케.png";
 import 징크스 from "../../../assets/gundamDateset/002/징크스.png";

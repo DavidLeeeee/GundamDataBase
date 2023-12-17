@@ -17,7 +17,7 @@ import 소마 from "../../../assets/gundamDateset/00/소마.png";
 import 아인 from "../../../assets/gundamDateset/00/아인.png";
 import 알레한드로 from "../../../assets/gundamDateset/00/알레한드로.png";
 import 알렐루야 from "../../../assets/gundamDateset/00/알렐루야1.png";
-import 알바아론 from "../../../assets/gundamDateset/00/알바아론.png";
+//import 알바아론 from "../../../assets/gundamDateset/00/알바아론.png";
 import 스메라기 from "../../../assets/gundamDateset/00/스메라기.png";
 import 알바트론 from "../../../assets/gundamDateset/00/알바트론.png";
 import 요한 from "../../../assets/gundamDateset/00/요한.png";

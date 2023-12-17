@@ -2,7 +2,7 @@ import React from "react";
 import CharactorsLayout from "../../Page_Component/CharactorLayout";
 import IntroduceLayout from "../../Page_Component/introducelayout";
 
-import 가이아 from "../../../assets/gundamDateset/SEEDD/가이아.png";
+//import 가이아 from "../../../assets/gundamDateset/SEEDD/가이아.png";
 import 이자크 from "../../../assets/gundamDateset/SEEDD/이자크.png";
 import 가이아앤드류 from "../../../assets/gundamDateset/SEEDD/가이아앤드류.png";
 import 거너 from "../../../assets/gundamDateset/SEEDD/거너.png";
