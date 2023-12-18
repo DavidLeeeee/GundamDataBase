@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from "./components/Page/Home";
 import About from "./components/Page/About";
 import Contact from "./components/Page/Contact";
@@ -10,38 +17,40 @@ import ModalLayout from "./components/Page_Component/ModalLayout";
 //각각의 페이지
 import Gundam00 from "./components/Page/NoUC/Gundam00";
 import Gundam002 from "./components/Page/NoUC/Gundam002";
-// import GundamG from "./components/Page/NoUC/GundamG";
-// import GundamOrphans from "./components/Page/NoUC/GundamOrphans";
 import GundamSEED from "./components/Page/NoUC/GundamSEED";
 import GundamSEEDD from "./components/Page/NoUC/GundamSEEDD";
-// import GundamW from "./components/Page/NoUC/GundamW";
-// import GundamWitch from "./components/Page/NoUC/GundamWitch";
 import NoUC from "./components/Page/NoUC/NoUC";
-
 import UC from "./components/Page/UC/UC";
 import Gundam from "./components/Page/UC/Gundam";
 import Gundam0080 from "./components/Page/UC/Gundam0080";
 import Gundam0083 from "./components/Page/UC/Gundam0083";
 import GundamHastaway from "./components/Page/UC/GundamHastaway";
-// import GundamTheOrigin from "./components/Page/UC/GundamTheOrigin";
 import GundamUC from "./components/Page/UC/GundamUC";
 import GundamZ from "./components/Page/UC/GundamZ";
 import CharsCounter from "./components/Page/UC/CharsCounter";
 
+const AppBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: ${({ theme }) => (theme === "light" ? "#000000" : "#ffffff")};
+`;
 const AppContainer = styled.div`
   position: relative; /* 추가된 스타일 - DrawerOverlay를 포지셔닝하기 위해 필요 */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1000px;
+  max-width: ${({ isHome }) =>
+    isHome ? "none" : "1000px"}; // Conditional max-width
   margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
-  background-color: #ffffff; /* 배경색 코드를 원하는 색상으로 변경하세요 */
-  height: 100vh; /* 화면 세로 높이 전체를 차지하도록 설정 */
+  background: ${({ theme }) => (theme === "light" ? "#000000" : "#ffffff")};
+  min-height: 100vh; /* 화면 세로 높이 전체를 차지하도록 설정 */
 `;
 
 const Navigation = styled.nav`
-  background-color: #ffffff;
+  background: ${({ theme }) => (theme === "light" ? "#000000" : "#ffffff")};
   width: 100%;
   max-width: 1000px;
   height: 4vh;
@@ -58,6 +67,7 @@ const Navigation = styled.nav`
     align-items: center; /* 세로 중앙 정렬 */
     line-height: 2vh;
     flex-grow: 1; /* 추가된 스타일 - 남은 공간을 차지하도록 설정 */
+    color: ${({ theme }) => (theme === "light" ? "#ffffff" : "#000000")};
   }
 
   li {
@@ -97,7 +107,8 @@ const Drawer = styled.div`
   z-index: 99;
   width: 200px;
   height: 100%;
-  background-color: #000;
+  background-color: ${({ theme }) =>
+    theme === "light" ? "#ffffff" : "#000000"};
   position: fixed;
   top: 0;
   left: ${({ isOpen }) => (isOpen ? "0" : "0px")};
@@ -120,7 +131,7 @@ const Drawer = styled.div`
     width: 90%;
     padding: 5px; /* 더 큰 패딩으로 터치 영역 확보 */
     text-decoration: none;
-    color: white;
+    color: ${({ theme }) => (theme === "light" ? "#000000" : "#ffffff")};
     transition: background-color 0.3s ease-in-out;
   }
 
@@ -128,7 +139,7 @@ const Drawer = styled.div`
     background-color: #333; /* 호버 시 배경색 변경 */
   }
   @media (max-width: 1370px) {
-    width: 130px;
+    width: 138px;
     left: ${({ isOpen }) => (isOpen ? "0" : "-250px")};
   }
 `;
@@ -178,9 +189,10 @@ const DrawerToggleButton = styled(Link)`
 
   @media (max-width: 1370px) {
     display: block;
-    background-color: #fff;
-    color: #333;
-    padding: 0 0 0 15px;
+    background-color: ${({ theme }) =>
+      theme === "light" ? "#000000" : "#ffffff"};
+    color: ${({ theme }) => (theme === "light" ? "#ffffff" : "#000000")};
+    padding: 0 0 0 18px;
     margin: 0px;
     border: none;
     cursor: pointer;
@@ -188,19 +200,19 @@ const DrawerToggleButton = styled(Link)`
   }
 `;
 
-const App = () => {
-  //드로워
+//메인 앱 만들어주기
+const MainApp = () => {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
-
-  //모달
-  const [modalContent, setModalContent] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = (component) => {
     setModalContent(component);
     setIsModalOpen(true);
@@ -208,6 +220,7 @@ const App = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const currentTheme = useSelector((state) => state.theme.currentTheme); // 현재 theme 상태 가져오기
 
   const routes = [
     { path: "/UC", label: "◈ 우주세기", component: <UC /> }, //여기부터 우주세기
@@ -240,10 +253,7 @@ const App = () => {
       label: "섬광의 하사웨이",
       component: <GundamHastaway />,
     },
-
     { path: "/NoUC", label: "◈ 비우주세기", component: <NoUC /> }, //여기부터 비우주세기
-    //{ path: "/GundamG", label: "기동무투전 G 건담", component: <GundamG /> },
-    //{ path: "/GundamW", label: "신기동전기 건담 W", component: <GundamW /> },
     {
       path: "/GundamSEED",
       label: "기동전사 건담 SEED",
@@ -265,11 +275,16 @@ const App = () => {
   ];
 
   return (
-    <Router>
-      <AppContainer>
+    <AppBox theme={currentTheme}>
+      <AppContainer isHome={isHome} theme={currentTheme}>
         {/* 네비게이션 */}
-        <Navigation>
-          <DrawerToggleButton to="#" onClick={toggleDrawer}>
+        {/* {!isHome && ( */}
+        <Navigation theme={currentTheme}>
+          <DrawerToggleButton
+            to="#"
+            onClick={toggleDrawer}
+            theme={currentTheme}
+          >
             ☰
           </DrawerToggleButton>
           {/* 상단 바 */}
@@ -289,16 +304,25 @@ const App = () => {
             <li onClick={() => openModal(<Contact />)}>Contact</li>
           </ul>
         </Navigation>
+        {/* )} */}
         {/* 모달 렌더링 */}
         {modalContent && (
-          <ModalLayout onClose={closeModal} isOpen={isModalOpen}>
+          <ModalLayout
+            theme={currentTheme}
+            onClose={closeModal}
+            isOpen={isModalOpen}
+          >
             {modalContent}
           </ModalLayout>
         )}
         {/* 바깥 영역 클릭시 모달 닫기 */}
         <Overlay isOpen={isDrawerOpen} onClick={closeDrawer} />
         {/* Drawer */}
-        <Drawer isOpen={isDrawerOpen} onClick={closeDrawer}>
+        <Drawer
+          isOpen={isDrawerOpen}
+          onClick={closeDrawer}
+          theme={currentTheme}
+        >
           <ul>
             {routes.map(({ path, label, component }, index) => (
               <li
@@ -316,8 +340,6 @@ const App = () => {
           </ThemeComponentWrapper>
         </Drawer>
 
-        <hr />
-
         {/* 실제 화면 루트 */}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -328,6 +350,17 @@ const App = () => {
           ))}
         </Routes>
       </AppContainer>
+    </AppBox>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="*" element={<MainApp />} />
+        {/* You can define more routes here if needed */}
+      </Routes>
     </Router>
   );
 };

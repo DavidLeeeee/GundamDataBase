@@ -20,6 +20,24 @@ const ModalContainer = styled.div`
   }
 `;
 
+const CloseButton = styled.button`
+  width: 100%;
+  height: 20%;
+  background-color: #000;
+  color: #fff;
+  font-size: 2em;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #333;
+  }
+`;
+
 const ModalLayout = ({ children, onClose, isOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -27,8 +45,7 @@ const ModalLayout = ({ children, onClose, isOpen }) => {
     if (isOpen) {
       setIsVisible(true);
     } else {
-      // 애니메이션이 완료된 후에 isVisible 상태를 변경
-      const timer = setTimeout(() => setIsVisible(false), 300); // 애니메이션 지속 시간
+      const timer = setTimeout(() => setIsVisible(false), 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -36,7 +53,7 @@ const ModalLayout = ({ children, onClose, isOpen }) => {
   return (
     <ModalContainer isOpen={isOpen} isVisible={isVisible}>
       {isVisible && children}
-      <button onClick={onClose}>Close</button>
+      <CloseButton onClick={onClose}>Close</CloseButton>
     </ModalContainer>
   );
 };

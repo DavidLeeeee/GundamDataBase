@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const CharactorContainer = styled.div`
-  background-color: #ffffff;
+  background-color: "#ffffff";
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,13 +12,15 @@ const CharactorContainer = styled.div`
   max-height: 335px;
   margin: 5px 0 0 0;
   position: relative; /* 자식 엘리먼트의 위치를 상대적(relative)으로 설정 */
-  border: 3px solid #000000; /* 테두리 추가 */
+  border: 3px solid
+    ${({ theme }) => (theme === "light" ? "#ffffff" : "#000000")};
 `;
 
 const MechaImage = styled.img`
+  background-color: "#ffffff";
   width: 100%; /* 부모의 넓이를 100% 차지 */
   height: 300px;
-  object-fit: contain; // 변경
+  object-fit: fill; // 변경
   border-radius: 0%;
   margin-bottom: 0px;
 `;
@@ -58,14 +61,15 @@ const CharactorSubtitle = styled.div`
 `;
 
 const Charactor = ({ mechaImage, pilotImage, name, subtitle }) => {
+  const currentTheme = useSelector((state) => state.theme.currentTheme); // 현재 theme 상태 가져오기
   return (
-    <CharactorContainer>
+    <CharactorContainer theme={currentTheme}>
       <MechaImage src={mechaImage} alt={name} />
       <CharactorOverlay>
         <CharactorImage src={pilotImage} alt={`Pilot ${name}`} />
       </CharactorOverlay>
-      <CharactorName>{name}</CharactorName>
-      <CharactorSubtitle>{subtitle}</CharactorSubtitle>
+      <CharactorName theme={currentTheme}>{name}</CharactorName>
+      <CharactorSubtitle theme={currentTheme}>{subtitle}</CharactorSubtitle>
     </CharactorContainer>
   );
 };
